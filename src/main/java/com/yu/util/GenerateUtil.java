@@ -8,6 +8,7 @@ import com.yu.pojo.bo.BasePackage;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -40,7 +41,7 @@ public class GenerateUtil {
         //新生成的文件的路径
         String newPath = System.getProperty("user.dir") + basePackage.getFilePath();
         //判断生成路径是否存在  不存在就创建
-        PathUtil.Path_Judge_Exist(newPath);
+        PathUtil.checkDirAndCreate(newPath);
         //创建配置对象
         cfg.setDirectoryForTemplateLoading(new File(path));
         //得到模板对象
@@ -57,7 +58,7 @@ public class GenerateUtil {
      */
     public static BasePackage makeBasePackage(BasePackage basePackage, String className) {
         String fileName = basePackage.getFileName().replace("*", className);
-        String substring = fileName.substring(0, fileName.indexOf('.'));
+        String substring = StringUtils.substringBeforeLast(fileName, ".");
         basePackage.setFileName(fileName);
         basePackage.setClazzName(substring);
         return basePackage;

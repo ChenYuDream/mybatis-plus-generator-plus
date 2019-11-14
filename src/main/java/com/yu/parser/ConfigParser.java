@@ -40,9 +40,7 @@ public class ConfigParser {
     public static Config getConfig(String path) throws DocumentException {
         ConfigParser cfu = new ConfigParser();
         Document document = cfu.getDocument(path);
-        Config parseXml = cfu.parseXml(document);
-        System.out.println(parseXml.toString());
-        return parseXml;
+        return cfu.parseXml(document);
     }
 
     /**
@@ -93,7 +91,7 @@ public class ConfigParser {
             String name = ElementUtil.getAttributeFromElement(param, "name");
             //将数据库连接的信息设置到对象中去
             try {
-                FieldUtils.writeField(dataBaseInfo, name, param.getTextTrim());
+                FieldUtils.writeDeclaredField(dataBaseInfo, name, param.getTextTrim(), true);
             } catch (IllegalAccessException e) {
                 e.printStackTrace();
             }

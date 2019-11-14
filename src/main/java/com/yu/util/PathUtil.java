@@ -11,7 +11,7 @@ public class PathUtil {
 	 * 判断路径是否存在并创建此路径
 	 * @param path 路径
 	 */
-	public static void Path_Judge_Exist(String path) {
+	public static void checkDirAndCreate(String path) {
 		File file = new File(path);
 		if (!file.exists()) {
             file.mkdirs();

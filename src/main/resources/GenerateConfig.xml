@@ -10,7 +10,7 @@
     <!--mysql数据库连接 type 数据库类型  dataspace 所需要生成的数据库的名字-->
     <jdbc type="mysql" database="edu_student">
         <param name="driverClassName">com.mysql.jdbc.Driver</param>
-        <param name="url">jdbc:mysql://localhost:3306/information_schema</param>
+        <param name="jdbcUrl">jdbc:mysql://localhost:3306/information_schema</param>
         <param name="username">root</param>
         <param name="password">chenyu</param>
     </jdbc>

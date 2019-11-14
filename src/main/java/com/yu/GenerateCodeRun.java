@@ -20,21 +20,22 @@ public class GenerateCodeRun {
 
     public static void main(String[] args) throws DocumentException, IOException, TemplateException {
 
-        String path = System.getProperty("user.dir") + "\\GenerateConfig.xml";
+        //找到配置文件的路径
+        String path = System.getProperty("user.dir") + "\\src\\main\\resources\\" + "GenerateConfig.xml";
         final Config config = ConfigParser.getConfig(path);
-
-        //这里可以自行实现如何有表名得到类名,表明全小写
-        List<Entity> entitys = InitDb.getInstence(config).initTables();
-
-        for (Entity entity : entitys) {
-            GenerateUtil.AllGenerate(entity, "model");
-            GenerateUtil.AllGenerate(entity, "dao");
-            GenerateUtil.AllGenerate(entity, "mapper");
-            GenerateUtil.AllGenerate(entity, "service");
-            GenerateUtil.AllGenerate(entity, "serviceImpl");
-            GenerateUtil.AllGenerate(entity, "controller");
-        }
-        System.out.println("------------生成完毕!-------------");
+        System.out.println(config);
+//        //这里可以自行实现如何有表名得到类名,表明全小写
+//        List<Entity> entitys = InitDb.getInstence(config).initTables();
+//
+//        for (Entity entity : entitys) {
+//            GenerateUtil.AllGenerate(entity, "model");
+//            GenerateUtil.AllGenerate(entity, "dao");
+//            GenerateUtil.AllGenerate(entity, "mapper");
+//            GenerateUtil.AllGenerate(entity, "service");
+//            GenerateUtil.AllGenerate(entity, "serviceImpl");
+//            GenerateUtil.AllGenerate(entity, "controller");
+//        }
+//        System.out.println("------------生成完毕!-------------");
     }
 
 }

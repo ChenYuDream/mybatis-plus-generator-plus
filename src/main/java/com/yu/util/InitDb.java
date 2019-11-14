@@ -16,9 +16,11 @@ import org.dom4j.DocumentException;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * @author ChenYu 初始化数据库类
@@ -101,13 +103,13 @@ public class InitDb {
 
         }
         System.out.println("查询所有表信息sql：" + sql);
-        @Cleanup JdbcUtil dbc = null;
-        @Cleanup PreparedStatement ps = null;
+        JdbcUtil dbc = null;
+        PreparedStatement ps = null;
         List<Entity> entitys = new ArrayList<>();
         try {
             dbc = new JdbcUtil(config);
             ps = dbc.getConnection().prepareStatement(sql.toString());
-            @Cleanup ResultSet rs = ps.executeQuery();
+            ResultSet rs = ps.executeQuery();
             List<DbColumn> dbColumns = initDbVo();
             while (rs.next()) {
                 //得到表名
@@ -117,8 +119,12 @@ public class InitDb {
                 entity.setClazzComments(rs.getString(2));
                 entitys.add(entity);
             }
+            rs.close();
+            ps.close();
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            Objects.requireNonNull(dbc).close();
         }
 
         return entitys;
@@ -147,13 +153,13 @@ public class InitDb {
             sb.append(" ORDER BY ordinal_position");
         }
         System.out.println("查询所有列信息sql：" + sb.toString());
-        @Cleanup JdbcUtil dbc = null;
-        @Cleanup PreparedStatement ps = null;
+        JdbcUtil dbc = null;
+        PreparedStatement ps = null;
         List<DbColumn> dbs = new ArrayList<>();
         try {
             dbc = new JdbcUtil(config);
             ps = dbc.getConnection().prepareStatement(sb.toString());
-            @Cleanup ResultSet rs = ps.executeQuery();
+            ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 DbColumn db = new DbColumn();
                 db.setTableName(rs.getString(1));
@@ -163,8 +169,12 @@ public class InitDb {
                 db.setIsPrimaryKey("PRI".equalsIgnoreCase(rs.getString(5)) ? "1" : "0");
                 dbs.add(db);
             }
+            rs.close();
+            ps.close();
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            Objects.requireNonNull(dbc).close();
         }
         return dbs;
     }
