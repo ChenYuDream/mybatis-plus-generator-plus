@@ -1,13 +1,13 @@
 ## 比mybatis-plus代码生成器更好用的生成器 mybatis-plus-generator-plus 
-###优势
-- ####可以自动生成代码注释从数据库中取得
-- ####使用freemarker来自定义模板使其更加方便
-- ####灵活选择模板，可以自行配置多套，并且灵活切换
-- ####已经给定了预留的模板，可以做到拿来即用
-- ####无需修改代码，仅修改GenerateConfig.xml中的配置即可，更加清晰 
+### 优势
+- #### 可以自动生成代码注释从数据库中取得
+- #### 使用freemarker来自定义模板使其更加方便
+- #### 灵活选择模板，可以自行配置多套，并且灵活切换
+- #### 已经给定了预留的模板，可以做到拿来即用
+- #### 无需修改代码，仅修改GenerateConfig.xml中的配置即可，更加清晰 
 
-###使用方式 
- - #####打开src\main\resources 下的 GenerateConfig.xml文件 并对文件进行修改
+### 使用方式 
+ - ##### 打开src\main\resources 下的 GenerateConfig.xml文件 并对文件进行修改
 ```
     <?xml version="1.0" encoding="UTF-8"?>
     <root>
@@ -49,7 +49,7 @@
         </ftl>
     
 ```
-####修改完配置之后 打开com.yu.GenerateCodeRun 这个类直接运行就可以 不需要做任何修改
+#### 修改完配置之后 打开com.yu.GenerateCodeRun 这个类直接运行就可以 不需要做任何修改
 
 ```
 public class GenerateCodeRun {
@@ -76,10 +76,10 @@ public class GenerateCodeRun {
 
 
 ```
-###模板文件
-- ####对应的模板文件地址 \ftl\model-mybatis-plus 
-- ####如果觉得模板生成的文件不是很满意，可以自行进行修改
-- ####模板引擎中输出的对象格式如下
+### 模板文件
+- #### 对应的模板文件地址 \ftl\model-mybatis-plus 
+- #### 如果觉得模板生成的文件不是很满意，可以自行进行修改
+- #### 模板引擎中输出的对象格式如下
 ```
 {
     "className":"Student",
@@ -176,14 +176,14 @@ public class GenerateCodeRun {
 }
 
 ```
-- ####freemarker 取值格式为：${属性名!}，对freemarker取值不熟的同学可以看下面这个链接
-- ####<a href="https://blog.csdn.net/xyu1234/article/details/78593893" target="_blank">freemarker取值教程</a>
+- #### freemarker 取值格式为：${属性名!}，对freemarker取值不熟的同学可以看下面这个链接
+- #### <a href="https://blog.csdn.net/xyu1234/article/details/78593893" target="_blank">freemarker取值教程</a>
 
-###生成文件的目录结构
+### 生成文件的目录结构
 
 ![avatar](https://app.public.zhuiyinanian.com/TIM20191115160928.png)
 
-###生成文件预览 以Student为例
+### 生成文件预览 以Student为例
 - #### model文件
 ```
     package com.zynn.count.entity;
@@ -297,7 +297,7 @@ public class StudentServiceImpl extends BaseServiceImpl<StudentMapper, Student> 
 }
 
 ```
--#### Controller文件（一般用不上）
+- #### Controller文件（一般用不上）
 ```
 package com.zynn.count.controller;
 
@@ -316,4 +316,4 @@ public class StudentController {
 }
 ```
 
-####有问题就留言吧！！
+#### 有问题就留言吧！！
