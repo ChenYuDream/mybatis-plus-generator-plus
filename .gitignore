@@ -3,7 +3,7 @@
 # Compiled class file
 .idea
 target
-output
+output/*
 *.class
 
 # Log file

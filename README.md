@@ -4,7 +4,7 @@
 - ####使用freemarker来自定义模板使其更加方便
 - ####灵活选择模板，可以自行配置多套，并且灵活切换
 - ####已经给定了预留的模板，可以做到拿来即用
-- ####无需修改代码，仅修改GenerateConfig.xml中的配置即可，更加清晰
+- ####无需修改代码，仅修改GenerateConfig.xml中的配置即可，更加清晰 
 
 ###使用方式 
  - #####打开src\main\resources 下的 GenerateConfig.xml文件 并对文件进行修改
