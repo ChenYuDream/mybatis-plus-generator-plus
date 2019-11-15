@@ -1,16 +1,11 @@
-package ${dao.packageName};
+package ${basePackageMap['dao'].packageName};
 
-import ${model.packageName}.${model.clazzName};
-import ${model.packageName}.config.mybatis.BaseMapper;
-
-import java.util.List;
-import java.util.Map;
 
 /**
-* @author yu_chen
-* @date ${.now?string("yyyy-MM-dd HH:mm")}
+* @author ${author!}
+* @date ${.now?string("yyyy-MM-dd HH:mm:ss")}
 **/
-public interface ${dao.clazzName} extends BaseMapper<${model.clazzName}>{
+public interface ${basePackageMap['dao'].className} extends BaseMapper<${basePackageMap['model'].className}>{
 
 
 }

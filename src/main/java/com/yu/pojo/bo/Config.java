@@ -3,6 +3,7 @@
  */
 package com.yu.pojo.bo;
 
+import com.google.gson.Gson;
 import lombok.Data;
 
 import java.util.HashMap;
@@ -13,6 +14,11 @@ import java.util.Map;
  */
 @Data
 public class Config {
+
+    /**
+     * 编码的作者名 用于解析配置文件中的信息
+     */
+    private String author;
     /**
      * 生成文件的路径
      */
@@ -63,5 +69,9 @@ public class Config {
 
     }
 
+    @Override
+    public String toString() {
+        return new Gson().toJson(this);
+    }
 
 }

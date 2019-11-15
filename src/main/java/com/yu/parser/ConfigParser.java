@@ -63,6 +63,8 @@ public class ConfigParser {
     private Config parseXml(Document document) {
         Config config = new Config();
         Element root = document.getRootElement();
+        //解析作者
+        parseAuthor(root, config);
         //解析jdbc节点
         parseJdbc(root, config);
         //解析basePackage节点
@@ -71,7 +73,14 @@ public class ConfigParser {
         parseTable(root, config);
         //解析ftl节点
         parseFtl(root, config);
+
         return config;
+    }
+
+    private void parseAuthor(Element root, Config config) {
+        //获取基类包
+        Element author = root.element("author");
+        config.setAuthor(author.node(0).getText().trim());
     }
 
 
@@ -110,7 +119,7 @@ public class ConfigParser {
         String basePackage = basePackages.node(0).getText().trim();
         config.setBasePackage(basePackage);
         //生成路径的地址
-        String basePath = "\\\\generate\\\\" + basePackage.replace(".", "\\\\") + "\\\\";
+        String basePath = "\\\\output\\\\" + basePackage.replace(".", "\\\\") + "\\\\";
         config.setBasePath(basePath);
     }
 
@@ -159,8 +168,8 @@ public class ConfigParser {
             //设置各个类型对应的模板的名称
             model.setFtlName(modelName + ".ftl");
             model.setBasePackageName(basePackageName);
-            model.setFileName(fileName);
-            model.setFilePath(config.getBasePath() + basePackageName.replace(".", "\\\\"));
+            model.setOutputFileName(fileName);
+            model.setOutputFilePath(config.getBasePath() + basePackageName.replace(".", "\\\\"));
             model.setPackageName(config.getBasePackage() + "." + basePackageName);
         }
     }

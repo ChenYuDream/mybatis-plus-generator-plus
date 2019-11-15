@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <root>
+    <!--配置编码的作者 即 @author 后的名称-->
+    <author>yu_chen</author>
     <!--oracle数据库连接-->
     <!--<jdbc type="oracle" database="">
         <param name="driverClassName">oracle.jdbc.driver.OracleDriver</param>
@@ -9,14 +11,14 @@
     </jdbc>-->
     <!--mysql数据库连接 type 数据库类型  dataspace 所需要生成的数据库的名字-->
     <jdbc type="mysql" database="edu_student">
-        <param name="driverClassName">com.mysql.jdbc.Driver</param>
-        <param name="jdbcUrl">jdbc:mysql://localhost:3306/information_schema</param>
+        <param name="driverClassName">com.mysql.cj.jdbc.Driver</param>
+        <param name="jdbcUrl">jdbc:mysql://localhost:3306/information_schema?serverTimezone=GMT%2B8</param>
         <param name="username">root</param>
         <param name="password">chenyu</param>
     </jdbc>
     <!--生成类的基包-->
     <!--生成的文件路径跟基类包有关-->
-    <!--当前生成文件的路径为\generate\org\jypj\dev-->
+    <!--当前生成文件的路径为\output\org\jypj\dev-->
     <!--<basePackage>com.jsly</basePackage>-->
     <basePackage>com.zynn.count</basePackage>
 

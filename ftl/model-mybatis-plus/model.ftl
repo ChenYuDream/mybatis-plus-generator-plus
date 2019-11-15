@@ -1,44 +1,30 @@
-package ${model.packageName};
+package ${basePackageMap['model'].packageName};
 
- <#list attrs as a>
-   <#if a.type=="Date">
-import java.time.LocalDateTime;
-   	<#break>
-   </#if>
-</#list>
- <#list attrs as a>
-   <#if a.type=="BigDecimal">
-import java.math.BigDecimal;
-   	<#break>
-   </#if>
-</#list>
-import com.baomidou.mybatisplus.annotations.TableField;
-import com.baomidou.mybatisplus.annotations.TableName;
 import lombok.Data;
 
 /**
-* ${clazzComments!}
-* @author yu_chen
-* @date ${.now?string("yyyy-MM-dd HH:mm")}
+* ${tableComment!}
+* @author ${author!}
+* @date ${.now?string("yyyy-MM-dd HH:mm:ss")}
 **/
 @Data
 @TableName("${tableName}")
-public class ${model.clazzName} implements java.io.Serializable{
+public class ${basePackageMap['model'].className} extends BaseEntity implements java.io.Serializable{
 
 	private static final long serialVersionUID = 1L;
 
 
-    <#list attrs as a>
+    <#list entityAttrs as ea>
     /**
-     * ${a.comment!}
+     * ${ea.comment!}
      */
-        <#if a.isPrimaryKey == "1">
+        <#if ea.isPrimaryKey == "1">
     @TableId
         </#if>
-        <#if a.isPrimaryKey != "1">
-    @TableField("${a.jdbcField}")
+        <#if ea.isPrimaryKey != "1">
+    @TableField("${ea.jdbcFieldName}")
         </#if>
-    private ${a.type} ${a.field};
+    private ${ea.javaType} ${ea.fieldName};
     </#list>
 
 }

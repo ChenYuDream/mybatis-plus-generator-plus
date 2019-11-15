@@ -4,8 +4,8 @@
 package com.yu.pojo.vo;
 
 
+import com.google.gson.Gson;
 import com.yu.pojo.bo.BasePackage;
-import com.yu.pojo.bo.EntityAttrVO;
 import lombok.Data;
 
 import java.util.HashMap;
@@ -16,7 +16,12 @@ import java.util.Map;
  * @author ChenYu 一个数据库表所具有的属性
  */
 @Data
-public class Entity {
+public class EntityVO {
+
+    /**
+     * 编码的作者
+     */
+    private String author;
     /**
      * 实体类的类名
      */
@@ -36,7 +41,7 @@ public class Entity {
     /**
      * 表注释
      */
-    private String clazzComments;
+    private String tableComment;
 
     /**
      * 基本集合类
@@ -48,7 +53,7 @@ public class Entity {
      */
     private List<EntityAttrVO> entityAttrs;
 
-    public Entity() {
+    public EntityVO() {
         basePackageMap = new HashMap<String, BasePackage>() {
             {
                 put("model", new BasePackage());
@@ -61,5 +66,8 @@ public class Entity {
         };
     }
 
-
+    @Override
+    public String toString() {
+        return new Gson().toJson(this);
+    }
 }

@@ -1,4 +1,4 @@
-package com.yu.pojo.bo;
+package com.yu.pojo.vo;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -17,11 +17,11 @@ public class EntityAttrVO {
     /**
      * 生成model的字段名
      */
-    private String field;
+    private String fieldName;
     /**
      * 字段类型
      */
-    private String type;
+    private String javaType;
     /**
      * 字段注释
      */
@@ -29,7 +29,7 @@ public class EntityAttrVO {
     /**
      * 数据库中的字段
      */
-    private String jdbcField;
+    private String jdbcFieldName;
     /**
      * jdbc类型
      */

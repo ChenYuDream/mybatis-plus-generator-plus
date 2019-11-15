@@ -9,10 +9,6 @@ import lombok.Data;
 public class BasePackage implements Cloneable {
 
     /**
-     * 生成的文件路径
-     */
-    private String filePath;
-    /**
      * 基类包名称
      */
     private String basePackageName;
@@ -23,7 +19,11 @@ public class BasePackage implements Cloneable {
     /**
      * 生成的文件名
      */
-    private String fileName;
+    private String outputFileName;
+    /**
+     * 生成的文件路径
+     */
+    private String outputFilePath;
     /**
      * 完整的包名
      */
@@ -32,7 +32,7 @@ public class BasePackage implements Cloneable {
     /**
      * 文件名对应的类名
      */
-    private String clazzName;
+    private String className;
 
 
     @Override

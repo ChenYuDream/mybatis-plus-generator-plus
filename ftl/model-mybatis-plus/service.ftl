@@ -1,14 +1,12 @@
-package ${service.packageName};
+package ${basePackageMap['service'].packageName};
 
-import ${model.packageName}.${model.clazzName};
-import java.util.List;
-import java.util.Map;
+import ${basePackageMap['model'].packageName}.${basePackageMap['model'].className};
 
 /**
-* @author yu_chen
-* @date ${.now?string("yyyy-MM-dd HH:mm")}
+* @author ${author!}
+* @date ${.now?string("yyyy-MM-dd HH:mm:ss")}
 **/
-public interface ${model.clazzName}Service extends BaseService<${model.clazzName}> {
+public interface ${basePackageMap['service'].className} extends BaseService<${basePackageMap['model'].className}> {
 
 
 }

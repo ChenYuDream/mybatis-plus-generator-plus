@@ -3,7 +3,7 @@
  */
 package com.yu.util;
 
-import com.yu.pojo.vo.Entity;
+import com.yu.pojo.vo.EntityVO;
 import com.yu.pojo.bo.BasePackage;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
@@ -28,7 +28,7 @@ public class GenerateUtil {
      * @throws IOException
      * @throws TemplateException
      */
-    public static void AllGenerate(Entity entity, String type) throws IOException, TemplateException {
+    public static void generateTemplate(EntityVO entity, String type) throws IOException, TemplateException {
         Configuration cfg = new Configuration();
         //模板的的路径
         String ftlPath = entity.getFtlPath();
@@ -39,14 +39,14 @@ public class GenerateUtil {
         //获取要生成的basePackage
         BasePackage basePackage = makeBasePackage(entity.getBasePackageMap().get(type), className);
         //新生成的文件的路径
-        String newPath = System.getProperty("user.dir") + basePackage.getFilePath();
+        String newPath = System.getProperty("user.dir") + basePackage.getOutputFilePath();
         //判断生成路径是否存在  不存在就创建
         PathUtil.checkDirAndCreate(newPath);
         //创建配置对象
         cfg.setDirectoryForTemplateLoading(new File(path));
         //得到模板对象
         Template template = cfg.getTemplate(basePackage.getFtlName(), "utf-8");
-        PathUtil.printFileByObject(entity, template, newPath, basePackage.getFileName());
+        PathUtil.printFileByObject(entity, template, newPath, basePackage.getOutputFileName());
     }
 
     /**
@@ -56,11 +56,11 @@ public class GenerateUtil {
      * @param className
      * @return
      */
-    public static BasePackage makeBasePackage(BasePackage basePackage, String className) {
-        String fileName = basePackage.getFileName().replace("*", className);
+    private static BasePackage makeBasePackage(BasePackage basePackage, String className) {
+        String fileName = basePackage.getOutputFileName().replace("*", className);
         String substring = StringUtils.substringBeforeLast(fileName, ".");
-        basePackage.setFileName(fileName);
-        basePackage.setClazzName(substring);
+        basePackage.setOutputFileName(fileName);
+        basePackage.setClassName(substring);
         return basePackage;
     }
 

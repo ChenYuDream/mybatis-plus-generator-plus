@@ -1,7 +1,7 @@
 package com.yu;
 
 import com.yu.pojo.bo.Config;
-import com.yu.pojo.vo.Entity;
+import com.yu.pojo.vo.EntityVO;
 import com.yu.parser.ConfigParser;
 import com.yu.util.GenerateUtil;
 import com.yu.util.InitDb;
@@ -24,18 +24,18 @@ public class GenerateCodeRun {
         String path = System.getProperty("user.dir") + "\\src\\main\\resources\\" + "GenerateConfig.xml";
         final Config config = ConfigParser.getConfig(path);
         System.out.println(config);
-//        //这里可以自行实现如何有表名得到类名,表明全小写
-//        List<Entity> entitys = InitDb.getInstence(config).initTables();
-//
-//        for (Entity entity : entitys) {
-//            GenerateUtil.AllGenerate(entity, "model");
-//            GenerateUtil.AllGenerate(entity, "dao");
-//            GenerateUtil.AllGenerate(entity, "mapper");
-//            GenerateUtil.AllGenerate(entity, "service");
-//            GenerateUtil.AllGenerate(entity, "serviceImpl");
-//            GenerateUtil.AllGenerate(entity, "controller");
-//        }
-//        System.out.println("------------生成完毕!-------------");
+        //获取得到的表的集合
+        List<EntityVO> entityList = InitDb.getInstence(config).initTables();
+        for (EntityVO entity : entityList) {
+            GenerateUtil.generateTemplate(entity, "model");
+            GenerateUtil.generateTemplate(entity, "dao");
+            GenerateUtil.generateTemplate(entity, "mapper");
+            GenerateUtil.generateTemplate(entity, "service");
+            GenerateUtil.generateTemplate(entity, "serviceImpl");
+            GenerateUtil.generateTemplate(entity, "controller");
+            System.out.println(entity);
+        }
+        System.out.println("------------生成完毕!-------------");
     }
 
 }

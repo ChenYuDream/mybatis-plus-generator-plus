@@ -5,21 +5,18 @@ package com.yu.util;
 
 import com.yu.constant.DataBaseConstant;
 import com.yu.enums.DataTypeEnum;
-import com.yu.pojo.bo.EntityAttrVO;
+import com.yu.pojo.vo.EntityAttrVO;
 import com.yu.pojo.bo.Config;
 import com.yu.pojo.bo.DbColumn;
-import com.yu.pojo.vo.Entity;
+import com.yu.pojo.vo.EntityVO;
 import com.yu.parser.ConfigParser;
-import lombok.Cleanup;
 import org.apache.commons.lang3.StringUtils;
 import org.dom4j.DocumentException;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -38,16 +35,6 @@ public class InitDb {
     private String basePackage;
 
     /**
-     * 根据数据库类型得到java类型的map映射
-     */
-    private static Map<String, String> database_to_java_type_mapping;
-
-    /**
-     * 根据数据库类型得到java类型的map映射
-     */
-    private static Map<String, String> java_to_mapper_mapping;
-
-    /**
      * 测试类
      *
      * @param args
@@ -55,7 +42,7 @@ public class InitDb {
      */
     public static void main(String[] args) throws DocumentException {
         String path = System.getProperty("user.dir") + "\\GenerateConfig.xml";
-        List<Entity> entitys = InitDb.getInstence(ConfigParser.getConfig(path)).initTables();
+        List<EntityVO> entitys = InitDb.getInstence(ConfigParser.getConfig(path)).initTables();
 
         System.out.println(entitys);
     }
@@ -86,7 +73,7 @@ public class InitDb {
      *
      * @return
      */
-    public List<Entity> initTables() {
+    public List<EntityVO> initTables() {
         StringBuilder sql = new StringBuilder();
         String tableNamesJoin = config.getTable().getTableNamesJoin();
         if (DataBaseConstant.DATABASE_ORACLE.equals(config.getJdbcType())) {
@@ -105,7 +92,7 @@ public class InitDb {
         System.out.println("查询所有表信息sql：" + sql);
         JdbcUtil dbc = null;
         PreparedStatement ps = null;
-        List<Entity> entitys = new ArrayList<>();
+        List<EntityVO> entitys = new ArrayList<>();
         try {
             dbc = new JdbcUtil(config);
             ps = dbc.getConnection().prepareStatement(sql.toString());
@@ -113,10 +100,10 @@ public class InitDb {
             List<DbColumn> dbColumns = initDbVo();
             while (rs.next()) {
                 //得到表名
-                Entity entity = initEntity(rs.getString(1));
+                EntityVO entity = initEntity(rs.getString(1));
                 List<EntityAttrVO> entityAttrs = getColumnsByTableName(rs.getString(1), dbColumns);
                 entity.setEntityAttrs(entityAttrs);
-                entity.setClazzComments(rs.getString(2));
+                entity.setTableComment(rs.getString(2));
                 entitys.add(entity);
             }
             rs.close();
@@ -186,11 +173,12 @@ public class InitDb {
      * @param tableName 表名
      * @return
      */
-    private Entity initEntity(String tableName) {
+    private EntityVO initEntity(String tableName) {
         tableName = tableName.toLowerCase();
         String className = config.getTable().getTableNameToEntityNameMapping().get(tableName);
         String ftlPath = config.getFtlPath();
-        Entity entity = new Entity();
+        EntityVO entity = new EntityVO();
+        entity.setAuthor(config.getAuthor());
         entity.setBasePackage(basePackage);
         entity.setClassName(className);
         entity.setTableName(tableName);
@@ -211,12 +199,13 @@ public class InitDb {
         for (DbColumn dbColumn : dbColumns) {
             if (tableName.equals(dbColumn.getTableName())) {
                 EntityAttrVO entityAttrVO = new EntityAttrVO();
+                //使用枚举类进行操作
                 DataTypeEnum dataTypeEnum = DataTypeEnum.valueOf(dbColumn.getColumnDataType().toUpperCase());
-                entityAttrVO.setType(dataTypeEnum.getJavaType());
-                entityAttrVO.setField(FieldNameUtil.underLineToUpperCase(dbColumn.getColumnName()));
+                entityAttrVO.setJavaType(dataTypeEnum.getJavaType());
+                entityAttrVO.setFieldName(FieldNameUtil.underLineToUpperCase(dbColumn.getColumnName()));
                 entityAttrVO.setIsPrimaryKey(dbColumn.getIsPrimaryKey());
                 entityAttrVO.setComment(dbColumn.getComments());
-                entityAttrVO.setJdbcField(dbColumn.getColumnName());
+                entityAttrVO.setJdbcFieldName(dbColumn.getColumnName());
                 entityAttrVO.setJdbcType(dataTypeEnum.getMapperJdbcType());
                 entityAttrs.add(entityAttrVO);
             }
