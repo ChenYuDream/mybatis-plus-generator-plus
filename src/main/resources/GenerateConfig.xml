@@ -25,10 +25,12 @@
     <!--需要生成的实体类和表之间对应关系-->
     <table>
         <mapping tableName="bs_student" modelName="Student"/>
+        <mapping tableName="eims_user" modelName="User"/>
     </table>
 
 
     <!-- 模板配置 模板文件路径 生成的包名以及文件名 * 代表className 如 Student-->
+    <!-- path里面选择配置不同的模板 如model1 都在ftl目录下-->
     <ftl path="\\ftl\\model-mybatis-plus">
         <param name="model" basePackageName="entity">*.java</param>
         <param name="dao" basePackageName="dao">*Mapper.java</param>
